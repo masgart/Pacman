@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_TargetSet = true;
+        m_TargetSet = false;
         m_Target = new Vector3(500, 500, 0);
     }
 
@@ -20,16 +20,21 @@ public class PlayerController : MonoBehaviour
     {
         if (m_TargetSet)
         {
-            Vector3 my_pos = transform.position;
-            Vector3 direction = m_Target - my_pos;
+            Vector3 direction = m_Target - transform.position;
             transform.position += direction.normalized * speed * Time.deltaTime;
+            if ((m_Target - transform.position).magnitude <= 0.01f)
+            {
+                transform.position = m_Target;
+                ReachTarget();
+            }
         }
     }
 
-    void SetTarget(Vector3 target)
+    public void SetTarget(Vector3 target)
     {
         m_Target = target;
         m_TargetSet = true;
+        Debug.Log("Player got new target: " + m_Target.ToString());
     }
 
     void ReachTarget()
