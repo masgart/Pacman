@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     void ReachTarget()
     {
+        Debug.Log("Player reached target at " + m_Target.ToString());
         m_Target = new Vector3();
         m_TargetSet = false;
     }
