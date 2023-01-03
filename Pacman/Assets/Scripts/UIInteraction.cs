@@ -44,6 +44,9 @@ public class UIInteraction : MonoBehaviour
 
         Debug.Log("This is at grid position (" + closestNode.GridPosX.ToString() + "," + closestNode.GridPosY.ToString() + ")");
 
-        PlayerController.SetTarget(closestPos);
+        // Note: This will change to a real path, not just the target node
+        List<Node> gridPath = new List<Node>();
+        gridPath.Add(closestNode);
+        PlayerController.SetGridPath(gridPath);
     }
 }

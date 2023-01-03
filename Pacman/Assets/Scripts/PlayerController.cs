@@ -6,13 +6,19 @@ public class PlayerController : MonoBehaviour
 {
     private bool m_TargetSet = false;
     private Vector3 m_Target = new Vector3();
+    private List<Node> m_GridPath;
     private float speed = 1.0f;
+
+    public int GridPosX { get; private set; }
+    public int GridPosY { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
         m_TargetSet = false;
         m_Target = new Vector3(500, 500, 0);
+        GridPosX = 0;
+        GridPosY = 0;
     }
 
     // Update is called once per frame
@@ -30,7 +36,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetTarget(Vector3 target)
+    void SetTarget(Vector3 target)
     {
         m_Target = target;
         m_TargetSet = true;
@@ -41,6 +47,40 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player reached target at " + m_Target.ToString());
         m_Target = new Vector3();
-        m_TargetSet = false;
+
+        if (m_GridPath.Count > 0)
+        {
+            SetNextTarget();
+        }
+        else
+        {
+            m_TargetSet = false;
+        }
+    }
+
+    void SetNextTarget()
+    {
+        // pop the first element
+        Node nextTarget = m_GridPath[0];
+        m_GridPath.RemoveAt(0);
+
+        GridPosX = nextTarget.GridPosX;
+        GridPosY = nextTarget.GridPosY;
+
+        m_Target = nextTarget.gameObject.transform.position;
+        m_TargetSet = true;
+    }
+
+    public void SetGridPath(List<Node> nodes)
+    {
+        m_GridPath = nodes;
+
+        if (!m_TargetSet)
+        {
+            if (m_GridPath.Count > 0)
+            {
+                SetNextTarget();
+            }
+        }
     }
 }
