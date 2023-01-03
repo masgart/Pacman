@@ -30,15 +30,19 @@ public class UIInteraction : MonoBehaviour
         // find node closest to this one
         float minDistance = 1000.0f;
         Vector3 closestPos = worldPos;
+        Node closestNode = Node.Nodes[0].GetComponent<Node>();
         foreach (var node in Node.Nodes)
         {
             float curDistance = (node.transform.position - worldPos).magnitude;
             if (curDistance < minDistance)
             {
                 minDistance = curDistance;
+                closestNode = node.GetComponent<Node>();
                 closestPos = node.transform.position;
             }
         }
+
+        Debug.Log("This is at grid position (" + closestNode.GridPosX.ToString() + "," + closestNode.GridPosY.ToString() + ")");
 
         PlayerController.SetTarget(closestPos);
     }

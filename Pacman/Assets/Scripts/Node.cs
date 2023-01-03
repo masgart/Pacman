@@ -6,6 +6,9 @@ public class Node : MonoBehaviour
 {
     public static List<GameObject> Nodes;
 
+    public int GridPosX;
+    public int GridPosY;
+
     // Start is called before the first frame update
     void Start()
     {

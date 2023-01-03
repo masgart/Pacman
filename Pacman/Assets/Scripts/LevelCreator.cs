@@ -40,6 +40,8 @@ public class LevelCreator : MonoBehaviour
                         break;
                 }
                 newNode.transform.position = new Vector3(curX * distance + offsetX, curY * distance + offsetY, 0);
+                newNode.GetComponent<Node>().GridPosX = curX;
+                newNode.GetComponent<Node>().GridPosY = curY;
                 //newNode.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             }
         }
