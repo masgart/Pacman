@@ -44,9 +44,54 @@ public class UIInteraction : MonoBehaviour
 
         Debug.Log("This is at grid position (" + closestNode.GridPosX.ToString() + "," + closestNode.GridPosY.ToString() + ")");
 
-        // Note: This will change to a real path, not just the target node
+        // now we have the grid position clicked - determine a path from the player position
+        // just go straight lines
+        int targetX = closestNode.GridPosX;
+        int targetY = closestNode.GridPosY;
+
+        // Create path to target
         List<Node> gridPath = new List<Node>();
-        gridPath.Add(closestNode);
+        if ( System.Math.Abs(targetX-PlayerController.GridPosX) < System.Math.Abs(targetY-PlayerController.GridPosY) )
+        {
+            // vertical movement
+            targetX = PlayerController.GridPosX;
+            if (targetY > PlayerController.GridPosY)
+            {
+                for (int curY=PlayerController.GridPosY+1; curY <= targetY; ++curY)
+                {
+                    gridPath.Add(Node.Nodes[targetX, curY].GetComponent<Node>());
+                }
+            }
+            else
+            {
+                for (int curY = PlayerController.GridPosY - 1; curY >= targetY; --curY)
+                {
+                    gridPath.Add(Node.Nodes[targetX, curY].GetComponent<Node>());
+                }
+            }
+        }
+        else
+        {
+            // horizontal movement
+            targetY = PlayerController.GridPosY;
+            if (targetX > PlayerController.GridPosX)
+            {
+                for (int curX = PlayerController.GridPosX + 1; curX <= targetX; ++curX)
+                {
+                    gridPath.Add(Node.Nodes[curX, targetY].GetComponent<Node>());
+                }
+            }
+            else
+            {
+                for (int curX = PlayerController.GridPosX - 1; curX >= targetX; --curX)
+                {
+                    gridPath.Add(Node.Nodes[curX, targetY].GetComponent<Node>());
+                }
+            }
+        }
+
+        Debug.Log("Target: (" + targetX.ToString() + ", " + targetY.ToString() + ")");
+
         PlayerController.SetGridPath(gridPath);
     }
 }
