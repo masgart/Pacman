@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Node : MonoBehaviour
 {
-    public static List<GameObject> Nodes;
+    public static GameObject[,] Nodes;
 
     public int GridPosX;
     public int GridPosY;
@@ -12,11 +12,6 @@ public class Node : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (Nodes == null)
-        {
-            Nodes = new List<GameObject>();
-        }
-        Nodes.Add(gameObject);
     }
 
     // Update is called once per frame

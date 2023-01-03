@@ -14,6 +14,9 @@ public class LevelCreator : MonoBehaviour
 
     void CreateNodes(int sizeX, int sizeY, float distance)
     {
+        // clear node list
+        Node.Nodes = new GameObject[sizeX,sizeY];
+        
         // create the level
         NodeType[,] level = LevelGeneration.Generate(sizeX, sizeY);
 
@@ -42,7 +45,9 @@ public class LevelCreator : MonoBehaviour
                 newNode.transform.position = new Vector3(curX * distance + offsetX, curY * distance + offsetY, 0);
                 newNode.GetComponent<Node>().GridPosX = curX;
                 newNode.GetComponent<Node>().GridPosY = curY;
-                //newNode.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+                // also add the new node to the node list
+                Node.Nodes[curX,curY] = newNode;
             }
         }
     }
